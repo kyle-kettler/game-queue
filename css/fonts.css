@@ -1,5 +1,5 @@
 @font-face {
-  font-family: Satoshi-Regular, sans-serif;
+  font-family: Satoshi-Regular;
   src:
     url("../fonts/Satoshi-Regular.woff2") format("woff2"),
     url("../fonts/Satoshi-Regular.woff") format("woff"),
@@ -10,7 +10,7 @@
 }
 
 @font-face {
-  font-family: ClashDisplay-Regular, sans-serif;
+  font-family: ClashDisplay-Regular;
   src:
     url("../fonts/ClashDisplay-Regular.woff2") format("woff2"),
     url("../fonts/ClashDisplay-Regular.woff") format("woff"),
@@ -21,7 +21,7 @@
 }
 
 @font-face {
-  font-family: ClashDisplay-Semibold, sans-serif;
+  font-family: ClashDisplay-Semibold;
   src:
     url("../fonts/ClashDisplay-Semibold.woff2") format("woff2"),
     url("../fonts/ClashDisplay-Semibold.woff") format("woff"),

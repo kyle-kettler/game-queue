@@ -1,0 +1,78 @@
+:root {
+  --black: rgb(10, 10, 13);
+  --light-purple: rgb(192, 202, 245);
+  --light-purple-50: rgba(192, 202, 245, 0.5);
+  --teal: rgb(89, 253, 198);
+  --dark-blue: rgb(54, 59, 84);
+  --dark-blue-50: rgba(54, 59, 84, 0.5);
+  --light-blue: rgb(134, 216, 250);
+  --light-blue-50: rgba(134, 216, 250, 0.5);
+}
+
+body {
+  font-family: Satoshi-Regular, sans-serif;
+  background-color: black;
+  color: var(--light-purple);
+}
+
+h1 {
+  font-family: ClashDisplay-Regular, sans-serif;
+}
+
+.flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex-group {
+  display: flex;
+  column-gap: 1rem;
+}
+
+.button {
+  color: var(--light-purple);
+  background-color: transparent;
+  border: 1px solid var(--teal);
+  border-radius: 10rem;
+  font-family: Satoshi-Regular, sans-serif;
+  font-size: 1rem;
+  padding: 0.25rem 1.25rem;
+  cursor: pointer;
+}
+
+.button.text {
+  border: none;
+  padding: 0;
+  transition: color 300ms;
+}
+
+.button.text:hover {
+  color: var(--teal);
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-family: ClashDisplay-Regular, sans-serif;
+  cursor: pointer;
+}
+
+.search {
+  background-color: var(--dark-blue-50);
+  border: 1px solid var(--teal);
+  border-radius: 10rem;
+  padding: 0.5rem 0.75rem;
+  font-family: Satoshi-Regular, sans-serif;
+  font-size: 1rem;
+  color: var(--light-purple);
+}
+
+.search::placeholder {
+  color: var(--light-purple-50);
+}
