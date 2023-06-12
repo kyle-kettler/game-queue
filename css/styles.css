@@ -3,6 +3,7 @@
   --light-purple: rgb(192, 202, 245);
   --light-purple-50: rgba(192, 202, 245, 0.5);
   --teal: rgb(89, 253, 198);
+  --teal-30: rgba(89, 253, 198, 0.3);
   --dark-blue: rgb(54, 59, 84);
   --dark-blue-50: rgba(54, 59, 84, 0.5);
   --light-blue: rgb(134, 216, 250);
@@ -13,6 +14,10 @@ body {
   font-family: Satoshi-Regular, sans-serif;
   background-color: black;
   color: var(--light-purple);
+}
+
+nav {
+  margin-bottom: 4rem;
 }
 
 h1 {
@@ -37,7 +42,7 @@ h1 {
 }
 
 .button {
-  color: var(--light-purple);
+  color: var(--light-purple-50);
   background-color: transparent;
   border: 1px solid var(--teal);
   border-radius: 10rem;
@@ -65,14 +70,20 @@ h1 {
 
 .search {
   background-color: var(--dark-blue-50);
-  border: 1px solid var(--teal);
+  outline: 1px solid var(--teal-30);
+  border: none;
   border-radius: 10rem;
   padding: 0.5rem 0.75rem;
   font-family: Satoshi-Regular, sans-serif;
   font-size: 1rem;
   color: var(--light-purple);
+  width: 100%;
 }
 
 .search::placeholder {
   color: var(--light-purple-50);
+}
+
+.search:focus {
+  outline: 1px solid var(--teal);
 }
