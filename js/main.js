@@ -21,10 +21,10 @@ $searchForm.addEventListener('submit', event => {
 });
 
 function buildResults(results) {
-  // const $searchResults = document.querySelector('#search-results');
-  // if ($searchResults) {
-  //   $searchResults.remove();
-  // }
+  const $searchResults = document.querySelector('#search-results');
+  if ($searchResults) {
+    $searchResults.remove();
+  }
 
   const $gameRow = document.createElement('div');
   $gameRow.setAttribute('class', 'row');
@@ -39,7 +39,7 @@ function buildResults(results) {
     $gameLink.setAttribute('data-item', 'link');
 
     const $imgWrap = document.createElement('div');
-    $imgWrap.setAttribute('class', 'cover-img-wrap');
+    $imgWrap.setAttribute('class', 'cover-img-wrap search');
 
     const $coverImg = document.createElement('img');
     $coverImg.setAttribute('class', 'cover-img');
