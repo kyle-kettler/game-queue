@@ -15,7 +15,7 @@
     <div class="container">
       <nav class="navbar">
         <div class="flex-group navbar-left">
-          <a class="logo">GameQueue</a>
+          <a href="#" class="logo">GameQueue</a>
           <form id="search">
             <input class="search-input" type="search" name="search" placeholder="Search for games"/>
           </form>
@@ -28,11 +28,17 @@
     </div>
   </header>
   <main>
+    <div class="container-md hidden" data-view="loading">
+      <div class="row justify-center align-center">
+        <img src="images/loading.svg" alt="loading">
+      </div>
+    </div>
     <div class="container-md hidden" data-view="search-results">
       <div class="row">
         <h1>Search Results</h1>
       </div>
     </div>
+
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
