@@ -8,11 +8,37 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/fonts.css">
 </head>
 <body>
   <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="flex-group navbar-left">
+          <a href="#" class="logo">GameQueue</a>
+          <form id="search">
+            <input class="search-input" type="search" name="search" placeholder="Search for games"/>
+          </form>
+        </div>
+        <div class="flex-group">
+          <button class="button text">Dashboard</button>
+          <button class="button text">Favorites</button>
+        </div>
+      </nav>
+    </div>
   </header>
   <main>
+    <div class="container-md hidden" data-view="loading">
+      <div class="row justify-center align-center">
+        <img src="images/loading.svg" alt="loading">
+      </div>
+    </div>
+    <div class="container-md hidden" data-view="search-results">
+      <div class="row">
+        <h1>Search Results</h1>
+      </div>
+    </div>
+
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
