@@ -16,30 +16,23 @@
       <nav class="navbar">
         <div class="flex-group navbar-left">
           <a class="logo">GameQueue</a>
-          <input class="search" type="search" id="search" name="search" placeholder="Search for games"/>
+          <form id="search">
+            <input class="search" type="search" name="search" placeholder="Search for games"/>
+          </form>
         </div>
         <div class="flex-group">
           <button class="button text">Dashboard</button>
           <button class="button text">Favorites</button>
         </div>
       </nav>
-
-      <div class="container-md" data-view="search">
-        <div class="row">
-          <h1>Search Results</h1>
-        </div>
-        <div class="row">
-          <div data-item="game" class="col-1-3 flex-group-vert">
-            <div class="img-wrap">
-              <img src="images/drg.png" alt="" class="cover-img">
-            </div>
-            <h2>Deep Rock Galactic</h2>
-          </div>
-        </div>
-      </div>
     </div>
   </header>
   <main>
+    <div class="container-md" data-view="search">
+      <div class="row">
+        <h1>Search Results</h1>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
