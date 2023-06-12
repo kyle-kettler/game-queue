@@ -16,6 +16,16 @@ body {
   color: var(--light-purple);
 }
 
+h1,
+h2 {
+  font-family: ClashDisplay-Regular, sans-serif;
+  font-weight: 400;
+}
+
+a {
+  cursor: pointer;
+}
+
 .navbar {
   display: flex;
   flex-wrap: wrap;
@@ -24,12 +34,6 @@ body {
   row-gap: 1rem;
   width: 100%;
   margin-bottom: 4rem;
-}
-
-h1,
-h2 {
-  font-family: ClashDisplay-Regular, sans-serif;
-  font-weight: 400;
 }
 
 .flex {
@@ -102,9 +106,21 @@ h2 {
   outline: 1px solid var(--teal);
 }
 
+.cover-img-wrap {
+  margin-bottom: 1rem;
+}
+
 .cover-img {
   width: 100%;
   border-radius: 0.5rem;
+  height: 30rem;
+  object-fit: cover;
+  outline: solid 3px transparent;
+  transition: outline 150ms ease;
+}
+
+.cover-img:hover {
+  outline: solid 4px var(--teal);
 }
 
 [data-item="game"] {

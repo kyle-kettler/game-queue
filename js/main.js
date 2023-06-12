@@ -1,5 +1,5 @@
 const $searchForm = document.querySelector('#search');
-const $searchView = document.querySelector('[data-view="search"]');
+const $searchView = document.querySelector('[data-view="search-results"]');
 
 function searchGames() {
   const $searchQuery = $searchForm[0].value;
@@ -14,16 +14,17 @@ function searchGames() {
 }
 
 $searchForm.addEventListener('submit', event => {
+  $searchView.classList.remove('hidden');
   event.preventDefault();
   searchGames();
   $searchForm.reset();
 });
 
 function buildResults(results) {
-  const $searchResults = document.querySelector('#search-results');
-  if ($searchResults) {
-    $searchResults.remove();
-  }
+  // const $searchResults = document.querySelector('#search-results');
+  // if ($searchResults) {
+  //   $searchResults.remove();
+  // }
 
   const $gameRow = document.createElement('div');
   $gameRow.setAttribute('class', 'row');
@@ -34,8 +35,11 @@ function buildResults(results) {
     $game.setAttribute('data-item', 'game');
     $game.setAttribute('class', 'col-1-3 flex-group-vert');
 
+    const $gameLink = document.createElement('a');
+    $gameLink.setAttribute('data-item', 'link');
+
     const $imgWrap = document.createElement('div');
-    $imgWrap.setAttribute('class', 'img-wrap');
+    $imgWrap.setAttribute('class', 'cover-img-wrap');
 
     const $coverImg = document.createElement('img');
     $coverImg.setAttribute('class', 'cover-img');
@@ -44,7 +48,8 @@ function buildResults(results) {
     const $title = document.createElement('h2');
     $title.textContent = results[i].name;
 
-    $game.appendChild($imgWrap);
+    $game.appendChild($gameLink);
+    $gameLink.appendChild($imgWrap);
     $game.appendChild($title);
     $imgWrap.appendChild($coverImg);
     $gameRow.appendChild($game);
