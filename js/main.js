@@ -15,13 +15,14 @@ function searchGames() {
     const results = xhr.response.results;
     $searchView.appendChild(buildSearchResults(results));
     $loadingView.classList.add('hidden');
+    $searchView.classList.remove('hidden');
   });
   xhr.send();
 }
 
 $searchForm.addEventListener('submit', event => {
-  $searchView.classList.remove('hidden');
   $loadingView.classList.remove('hidden');
+  $gameInfoView.classList.add('hidden');
   event.preventDefault();
   searchGames();
   $searchForm.reset();
@@ -73,7 +74,6 @@ $searchView.addEventListener('click', event => {
   }
   findGame(gameID);
   $loadingView.classList.remove('hidden');
-  $gameInfoView.classList.remove('hidden');
   $searchView.classList.add('hidden');
 });
 
@@ -88,6 +88,7 @@ function findGame(id) {
     currentGame = xhr.response;
     updateGameInfo(currentGame);
     $loadingView.classList.add('hidden');
+    $gameInfoView.classList.remove('hidden');
   });
   xhr.send();
 }
