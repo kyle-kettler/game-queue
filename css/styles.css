@@ -82,6 +82,7 @@ a {
 
 .button.text:hover {
   color: var(--teal);
+  background-color: transparent;
 }
 
 .rate-button {
@@ -181,11 +182,13 @@ a {
   margin: 0 auto;
   filter: blur(2.5rem);
   z-index: 0;
+  width: 100%;
 }
 
 .info-main-img {
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 /* Utility classes */

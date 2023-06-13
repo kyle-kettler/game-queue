@@ -1,6 +1,9 @@
 const $searchForm = document.querySelector('#search');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
+const $gameInfoView = document.querySelector('[data-view="game-info"]');
+
+let currentGame;
 
 // Search Code //
 function searchGames() {
@@ -30,16 +33,17 @@ function buildSearchResults(results) {
     $searchResults.remove();
   }
 
-  const $gameRow = document.createElement('div');
-  $gameRow.setAttribute('class', 'row');
-  $gameRow.setAttribute('id', 'search-results');
+  const $resultRow = document.createElement('div');
+  $resultRow.setAttribute('class', 'row');
+  $resultRow.setAttribute('id', 'search-results');
 
   for (let i = 0; i < results.length; i++) {
     const $game = document.createElement('div');
     $game.setAttribute('class', 'col-1-3 flex-group-vert');
+    $game.setAttribute('data-item', 'game');
+    $game.setAttribute('data-id', results[i].id);
 
     const $gameLink = document.createElement('a');
-    $gameLink.setAttribute('data-item', 'link');
 
     const $imgWrap = document.createElement('div');
     $imgWrap.setAttribute('class', 'cover-img-wrap search');
@@ -54,16 +58,40 @@ function buildSearchResults(results) {
 
     $game.appendChild($gameLink);
     $gameLink.appendChild($imgWrap);
-    $game.appendChild($title);
+    $gameLink.appendChild($title);
     $imgWrap.appendChild($coverImg);
-    $gameRow.appendChild($game);
+    $resultRow.appendChild($game);
   }
-  return $gameRow;
+
+  return $resultRow;
 }
+
+$searchView.addEventListener('click', event => {
+  let gameID;
+  if (event.target.closest('[data-item="game"]')) {
+    gameID = event.target.closest('[data-item="game"]').getAttribute('data-id');
+  }
+  findGame(gameID);
+  $loadingView.classList.remove('hidden');
+  $gameInfoView.classList.remove('hidden');
+  $searchView.classList.add('hidden');
+});
 
 // End Search Code //
 
 // Game Info Code //
+function findGame(id) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://rawg.io/api/games/' + id + '?key=70f3566e2dca40338ef7b433dfc63e7b');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', () => {
+    currentGame = xhr.response;
+    updateGameInfo(currentGame);
+    $loadingView.classList.add('hidden');
+  });
+  xhr.send();
+}
+
 function updateGameInfo(game) {
   const $gameMainImg = document.querySelector('.info-main-img');
   const $glowImg = document.querySelector('.glow-img');
@@ -73,8 +101,6 @@ function updateGameInfo(game) {
   $gameMainImg.setAttribute('alt', game.name);
   $glowImg.setAttribute('src', game.background_image);
   $gameTitle.textContent = game.name;
-  $gameDescription.textContent = game.description;
+  $gameDescription.innerHTML = game.description;
 }
-
-updateGameInfo();
 // End Game Info Code //
