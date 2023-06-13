@@ -49,7 +49,7 @@
   }
 
   .col-half {
-    width: 50%;
+    width: calc(50% - 1rem);
   }
 
   .col-1-3 {

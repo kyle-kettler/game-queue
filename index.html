@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
+  <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -27,18 +28,56 @@
       </nav>
     </div>
   </header>
+
   <main>
+    <!-- Loading View -->
     <div class="container-md hidden" data-view="loading">
       <div class="row justify-center align-center">
         <img src="images/loading.svg" alt="loading">
       </div>
     </div>
+    <!-- Search View -->
     <div class="container-md hidden" data-view="search-results">
       <div class="row">
         <h1>Search Results</h1>
       </div>
     </div>
-
+    <!-- Game Info View -->
+    <div class="container-md" data-view="game-info">
+      <div class="row">
+        <div class="col-half">
+          <div class="info-main-img-wrap flex justify-center">
+            <img class="info-main-img" src="images/drg.png" alt="drg">
+            <img class="glow-img" src="images/drg.png" alt="drg">
+          </div>
+        </div>
+        <div class="col-half flex-group-vert">
+          <h1>Deep Rock Galactic</h1>
+          <p>DEEP ROCK GALACTIC is a first-person co-operative sci-fi shooter for up to 4 players, featuring fully procedural and
+          destructible environments to explore, mine, and explode your way through to reach your objectives. As a team of veteran
+          dwarven space miners, you must take on perilous missions for the interplanetary mining corporation DEEP ROCK GALACTIC
+          and go where no-one else dares - into the deepest, most dangerous cave systems of the most hostile planet ever
+          discovered.</p>
+          <div class="margin-top-2 flex-group-vert">
+            <div>
+              <h3>add to list</h3>
+              <div class="flex-group">
+                <button class="button">Played</button>
+                <button class="button">Want to Play</button>
+              </div>
+            </div>
+            <!-- Rating view -->
+            <div class="hidden" data-view="rate">
+              <h3>rate</h3>
+              <div>
+                <button class="rate-button left"><i class="lni lni-thumbs-up"></i></button>
+                <button class="rate-button right"><i class="lni lni-thumbs-down"></i></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
