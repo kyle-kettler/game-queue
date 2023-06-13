@@ -2,6 +2,7 @@ const $searchForm = document.querySelector('#search');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
 
+// Search Code //
 function searchGames() {
   const $searchQuery = $searchForm[0].value;
   const xhr = new XMLHttpRequest();
@@ -59,3 +60,21 @@ function buildSearchResults(results) {
   }
   return $gameRow;
 }
+
+// End Search Code //
+
+// Game Info Code //
+function updateGameInfo(game) {
+  const $gameMainImg = document.querySelector('.info-main-img');
+  const $glowImg = document.querySelector('.glow-img');
+  const $gameTitle = document.querySelector('#game-title');
+  const $gameDescription = document.querySelector('#game-description');
+  $gameMainImg.setAttribute('src', game.background_image);
+  $gameMainImg.setAttribute('alt', game.name);
+  $glowImg.setAttribute('src', game.background_image);
+  $gameTitle.textContent = game.name;
+  $gameDescription.textContent = game.description;
+}
+
+updateGameInfo();
+// End Game Info Code //
