@@ -2,6 +2,9 @@ const $searchForm = document.querySelector('#search');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
+const $gameButtonGroup = document.querySelector('#game-button-group');
+const $playedButton = document.querySelector('#played-button');
+const $wantButton = document.querySelector('#want-button');
 
 let currentGame;
 
@@ -72,15 +75,15 @@ $searchView.addEventListener('click', event => {
   if (event.target.closest('[data-item="game"]')) {
     gameID = event.target.closest('[data-item="game"]').getAttribute('data-id');
   }
-  findGame(gameID);
+  findCurrentGame(gameID);
   $loadingView.classList.remove('hidden');
   $searchView.classList.add('hidden');
 });
-
 // End Search Code //
 
 // Game Info Code //
-function findGame(id) {
+// Funcitons
+function findCurrentGame(id) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://rawg.io/api/games/' + id + '?key=70f3566e2dca40338ef7b433dfc63e7b');
   xhr.responseType = 'json';
@@ -103,5 +106,66 @@ function updateGameInfo(game) {
   $glowImg.setAttribute('src', game.background_image);
   $gameTitle.textContent = game.name;
   $gameDescription.innerHTML = game.description;
+  updateButtonState();
 }
+
+function updateButtonState() {
+  $wantButton.classList.remove('active');
+  $playedButton.classList.remove('active');
+
+  if (data.length !== 0) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === currentGame.id) {
+        if (data[i].played === true) {
+          $playedButton.classList.add('active');
+          $wantButton.classList.remove('active');
+        } else if (data[i].want === true) {
+          $wantButton.classList.add('active');
+          $playedButton.classList.remove('active');
+        }
+      }
+    }
+  }
+}
+
+// function createGameData() {
+//   const game = {};
+//   game.id = currentGame.id;
+//   game.name = currentGame.name;
+//   game.description = currentGame.description;
+//   game.background_image = currentGame.background_image;
+//   game.want = false;
+//   game.played = false;
+//   game.favorite = false;
+//   game.good = false;
+//   game.bad = false;
+//   data.unshift(game);
+// }
+
+function updateGamePlayedState(event) {
+  if (data.length !== 0) {
+    if (event.target === $playedButton) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === currentGame.id) {
+          data[i].played = true;
+          data[i].want = false;
+        }
+      }
+    }
+    if (event.target === $wantButton) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === currentGame.id) {
+          data[i].played = false;
+          data[i].want = true;
+        }
+      }
+    }
+  }
+}
+
+// Events
+$gameButtonGroup.addEventListener('click', event => {
+  updateGamePlayedState(event);
+  updateButtonState();
+});
 // End Game Info Code //

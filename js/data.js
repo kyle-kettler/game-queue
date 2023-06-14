@@ -1,12 +1,14 @@
 /* exported data */
-const data = [];
+var data = [];
 
-// const gameObjectStructure = {
-//   name: 'name',
-//   description: 'description',
-//   background_img: 'url',
-//   want: Boolean,
-//   played: Boolean,
-//   favorite: Boolean,
-//   goodOrBad: Boolean
-// };
+window.addEventListener('beforeunload', event => {
+  const dataJSON = JSON.stringify(data);
+  localStorage.setItem('data', dataJSON);
+  // localStorage.clear();
+});
+
+const savedGames = localStorage.getItem('data');
+
+if (savedGames !== null) {
+  data = JSON.parse(savedGames);
+}
