@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AJAX Project</title>
+  <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet">
   <link rel="icon" href="images/favicon.ico">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -27,18 +28,52 @@
       </nav>
     </div>
   </header>
+
   <main>
+    <!-- Loading View -->
     <div class="container-md hidden" data-view="loading">
       <div class="row justify-center align-center">
         <img src="images/loading.svg" alt="loading">
       </div>
     </div>
+    <!-- Search View -->
     <div class="container-md hidden" data-view="search-results">
       <div class="row">
         <h1>Search Results</h1>
       </div>
     </div>
-
+    <!-- Game Info View -->
+    <div class="container-md hidden" data-view="game-info">
+      <div id="game-info-row" class="row">
+        <div class="col-half">
+          <div class="info-main-img-wrap flex justify-center">
+            <img class="info-main-img" src="" alt="drg">
+            <img class="glow-img" src="" alt="">
+          </div>
+        </div>
+        <div class="col-half flex-group-vert">
+          <h1 id="game-title"></h1>
+          <p id="game-description"></p>
+          <div id="game-button-group" class="margin-top-2 flex-group-vert">
+            <div>
+              <h3>add to list</h3>
+              <div class="flex-group">
+                <button id="played-button" class="button">Played</button>
+                <button id="want-button" class="button">Want to Play</button>
+              </div>
+            </div>
+            <!-- Rating view -->
+            <div class="hidden" data-view="rate">
+              <h3>rate</h3>
+              <div>
+                <button class="rate-button left"><i class="lni lni-thumbs-up"></i></button>
+                <button class="rate-button right"><i class="lni lni-thumbs-down"></i></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

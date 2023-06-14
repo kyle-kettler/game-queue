@@ -10,16 +10,32 @@
   --light-blue-50: rgba(134, 216, 250, 0.5);
 }
 
+::selection {
+  background: var(--teal);
+  color: var(--black);
+}
+
 body {
   font-family: Satoshi-Regular, sans-serif;
   background-color: black;
   color: var(--light-purple);
 }
 
-h1,
+h1 {
+  font-family: ClashDisplay-Regular, sans-serif;
+  font-weight: 400;
+}
+
 h2 {
   font-family: ClashDisplay-Regular, sans-serif;
   font-weight: 400;
+}
+
+h3 {
+  font-family: ClashDisplay-Semibold, sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 a {
@@ -41,7 +57,7 @@ a {
 }
 
 .button {
-  color: var(--light-purple-50);
+  color: var(--light-purple);
   background-color: transparent;
   border: 1px solid var(--teal);
   border-radius: 10rem;
@@ -49,9 +65,21 @@ a {
   font-size: 1rem;
   padding: 0.25rem 1.25rem;
   cursor: pointer;
+  transition: color 200ms ease, background-color 200ms ease;
+}
+
+.button:hover {
+  background-color: var(--teal);
+  color: var(--black);
+}
+
+.button.active {
+  background-color: var(--teal);
+  color: var(--black);
 }
 
 .button.text {
+  color: var(--light-purple-50);
   border: none;
   padding: 0;
   transition: color 300ms;
@@ -59,8 +87,37 @@ a {
 
 .button.text:hover {
   color: var(--teal);
+  background-color: transparent;
 }
 
+.rate-button {
+  color: var(--teal);
+  font-size: 1rem;
+  background-color: transparent;
+  border: 1px solid var(--teal);
+  cursor: pointer;
+  transition: color 300ms ease, background-color 300ms ease;
+}
+
+.rate-button.left {
+  border-top-left-radius: 10rem;
+  border-bottom-left-radius: 10rem;
+  padding: 0.5rem 0.75rem 0.25rem 1rem;
+}
+
+.rate-button.right {
+  border-top-right-radius: 10rem;
+  border-bottom-right-radius: 10rem;
+  padding: 0.5rem 1rem 0.25rem 0.75rem;
+  margin-left: -5px;
+}
+
+.rate-button:hover {
+  background-color: var(--teal);
+  color: var(--black);
+}
+
+/* navigation */
 .logo {
   font-size: 1.3rem;
   font-family: ClashDisplay-Regular, sans-serif;
@@ -87,6 +144,16 @@ a {
   outline: 1px solid var(--teal);
 }
 
+[type="search"]::-webkit-search-cancel-button {
+  appearance: none;
+  height: 0.75rem;
+  width: 0.75rem;
+  background-image: url("../images/search-clear.svg");
+  background-size: 0.75rem 0.75rem;
+  cursor: pointer;
+}
+
+/* Images */
 .cover-img-wrap {
   margin-bottom: 1rem;
   position: relative;
@@ -109,15 +176,29 @@ a {
   outline: solid 4px var(--teal);
 }
 
-[type="search"]::-webkit-search-cancel-button {
-  appearance: none;
-  height: 0.75rem;
-  width: 0.75rem;
-  background-image: url("../images/search-clear.svg");
-  background-size: 0.75rem 0.75rem;
-  cursor: pointer;
+.info-main-img-wrap {
+  width: 100%;
+  position: relative;
 }
 
+.glow-img {
+  position: absolute;
+  top: 0;
+  margin: 0 auto;
+  filter: blur(1.75rem);
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10%;
+}
+
+.info-main-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Utility classes */
 .flex {
   display: flex;
 }
@@ -143,6 +224,10 @@ a {
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
+}
+
+.margin-top-2 {
+  margin-top: 2rem;
 }
 
 @media screen and (min-width: 768px) {
