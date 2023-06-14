@@ -99,6 +99,11 @@ a {
   transition: color 300ms ease, background-color 300ms ease;
 }
 
+.rate-button.active {
+  background-color: var(--teal);
+  color: var(--black);
+}
+
 .rate-button.left {
   border-top-left-radius: 10rem;
   border-bottom-left-radius: 10rem;
@@ -228,6 +233,10 @@ a {
 
 .margin-top-2 {
   margin-top: 2rem;
+}
+
+i {
+  pointer-events: none;
 }
 
 @media screen and (min-width: 768px) {
