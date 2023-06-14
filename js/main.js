@@ -128,44 +128,64 @@ function updateButtonState() {
   }
 }
 
-// function createGameData() {
-//   const game = {};
-//   game.id = currentGame.id;
-//   game.name = currentGame.name;
-//   game.description = currentGame.description;
-//   game.background_image = currentGame.background_image;
-//   game.want = false;
-//   game.played = false;
-//   game.favorite = false;
-//   game.good = false;
-//   game.bad = false;
-//   data.unshift(game);
-// }
+function createGameData() {
+  const game = {};
+  game.id = currentGame.id;
+  game.name = currentGame.name;
+  game.description = currentGame.description;
+  game.background_image = currentGame.background_image;
+  game.want = false;
+  game.played = false;
+  game.favorite = false;
+  game.good = false;
+  game.bad = false;
+  data.unshift(game);
+}
 
-function updateGamePlayedState(event) {
+function updateGameStatus(event) {
   if (data.length !== 0) {
+    let gameInData = false;
     if (event.target === $playedButton) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === currentGame.id) {
+          gameInData = true;
           data[i].played = true;
           data[i].want = false;
         }
+      }
+      if (gameInData === false) {
+        createGameData();
+        data[0].played = true;
       }
     }
     if (event.target === $wantButton) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === currentGame.id) {
+          gameInData = true;
           data[i].played = false;
           data[i].want = true;
         }
       }
+      if (gameInData === false) {
+        createGameData();
+        data[0].want = true;
+      }
+    }
+  } else {
+    if (event.target === $playedButton) {
+      createGameData();
+      data[0].played = true;
+    }
+    if (event.target === $wantButton) {
+      createGameData();
+      data[0].want = true;
     }
   }
 }
 
 // Events
 $gameButtonGroup.addEventListener('click', event => {
-  updateGamePlayedState(event);
+  updateGameStatus(event);
   updateButtonState();
 });
 // End Game Info Code //
