@@ -1,10 +1,15 @@
-const $searchForm = document.querySelector('#search');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
+const $ratingView = document.querySelector('[data-view="rate"]');
+
+const $searchForm = document.querySelector('#search');
+
 const $gameButtonGroup = document.querySelector('#game-button-group');
 const $playedButton = document.querySelector('#played-button');
 const $wantButton = document.querySelector('#want-button');
+// const $thumbsUpButton = document.querySelector('#thumbs-up');
+// const $thumbsDownButton = document.querySelector('#thumbs-down');
 
 let currentGame;
 
@@ -119,9 +124,11 @@ function updateButtonState() {
         if (data[i].played === true) {
           $playedButton.classList.add('active');
           $wantButton.classList.remove('active');
+          $ratingView.classList.remove('hidden');
         } else if (data[i].want === true) {
           $wantButton.classList.add('active');
           $playedButton.classList.remove('active');
+          $ratingView.classList.add('hidden');
         }
       }
     }
@@ -137,8 +144,8 @@ function createGameData() {
   game.want = false;
   game.played = false;
   game.favorite = false;
-  game.good = false;
-  game.bad = false;
+  game.thumbsUp = false;
+  game.thumbsDown = false;
   data.unshift(game);
 }
 
