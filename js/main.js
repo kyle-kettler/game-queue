@@ -4,6 +4,11 @@ const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
 const $ratingView = document.querySelector('[data-view="rate"]');
 
+const $navbar = document.querySelector('nav');
+const $logo = document.querySelector('#logo');
+const $navDashboardButton = document.querySelector('#nav-dashboard');
+// const $navFavoriteButton = document.querySelector('#nav-favorite');
+
 const $wantToPlayRow = document.querySelector('#want-to-play');
 const $playedRow = document.querySelector('#played');
 
@@ -17,9 +22,22 @@ const $thumbsDownButton = document.querySelector('#thumbs-down');
 
 let currentGame;
 
+// Navigation Code //
+// Functions
+function navManager(event) {
+  if (event.target === $logo || event.target === $navDashboardButton) {
+    buildDashboard(data);
+    $dashboardView.classList.remove('hidden');
+    $gameInfoView.classList.add('hidden');
+    $searchView.classList.add('hidden');
+  }
+}
+
+$navbar.addEventListener('click', navManager);
+
 // Dashboard code //
 // Functions
-function buildDashboardList(data) {
+function buildDashboard(data) {
   $playedRow.replaceChildren();
   $wantToPlayRow.replaceChildren();
   const played = [];
@@ -77,7 +95,7 @@ function buildDashboardList(data) {
 
 // Events
 document.addEventListener('DOMContentLoaded', event => {
-  buildDashboardList(data);
+  buildDashboard(data);
   $loadingView.classList.add('hidden');
 });
 
@@ -165,6 +183,7 @@ $searchView.addEventListener('click', event => {
 $searchForm.addEventListener('submit', event => {
   $loadingView.classList.remove('hidden');
   $gameInfoView.classList.add('hidden');
+  $dashboardView.classList.add('hidden');
   event.preventDefault();
   searchGames();
   $searchForm.reset();
