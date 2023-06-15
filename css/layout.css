@@ -35,7 +35,7 @@
 }
 
 .col-1-8 {
-  flex-basis: calc(50% - 1rem);
+  flex-basis: calc(50% - 0.5rem);
 }
 
 .navbar-left {
@@ -66,10 +66,16 @@
   }
 
   .col-1-8 {
-    flex-basis: calc((100% / 8) - 0.875rem);
+    flex-basis: calc((100% / 4) - 0.75rem);
   }
 
   .navbar-left {
     width: 50%;
+  }
+}
+
+@media screen and (min-width: 991px) {
+  .col-1-8 {
+    flex-basis: calc((100% / 8) - 0.875rem);
   }
 }
