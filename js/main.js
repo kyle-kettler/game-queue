@@ -20,42 +20,54 @@ let currentSearchGame;
 function buildDashboardList(data) {
   $playedRow.replaceChildren();
   $wantToPlayRow.replaceChildren();
+  const played = [];
+  const want = [];
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].played === true) {
-      const $gameWrap = document.createElement('div');
-      $gameWrap.setAttribute('class', 'col-1-8');
-      $gameWrap.setAttribute('data-item', 'game');
-      const $gameLink = document.createElement('a');
-      const $gameImgWrap = document.createElement('div');
-      $gameImgWrap.setAttribute('class', 'cover-img-wrap');
-      const $gameImg = document.createElement('img');
-      $gameImg.setAttribute('class', 'cover-img');
-      $gameImg.setAttribute('src', data[i].background_image);
-      $gameImg.setAttribute('alt', data[i].title);
-
-      $playedRow.appendChild($gameWrap);
-      $gameWrap.appendChild($gameLink);
-      $gameLink.appendChild($gameImgWrap);
-      $gameImgWrap.appendChild($gameImg);
-    } else if (data[i].played === false) {
-      const $gameWrap = document.createElement('div');
-      $gameWrap.setAttribute('class', 'col-1-8');
-      $gameWrap.setAttribute('data-item', 'game');
-      $gameWrap.setAttribute('id', data[i].id);
-      const $gameLink = document.createElement('a');
-      const $gameImgWrap = document.createElement('div');
-      $gameImgWrap.setAttribute('class', 'cover-img-wrap');
-      const $gameImg = document.createElement('img');
-      $gameImg.setAttribute('class', 'cover-img');
-      $gameImg.setAttribute('src', data[i].background_image);
-      $gameImg.setAttribute('alt', data[i].title);
-
-      $wantToPlayRow.appendChild($gameWrap);
-      $gameWrap.appendChild($gameLink);
-      $gameLink.appendChild($gameImgWrap);
-      $gameImgWrap.appendChild($gameImg);
+      played.unshift(data[i]);
+    } else if (data[i].want === true) {
+      want.unshift(data[i]);
     }
+  }
+
+  if (played.length > 16) { played.splice(16); }
+  if (want.length > 16) { want.splice(16); }
+
+  for (let i = 0; i < played.length; i++) {
+    const $gameWrap = document.createElement('div');
+    $gameWrap.setAttribute('class', 'col-1-8');
+    $gameWrap.setAttribute('data-item', 'game');
+    const $gameLink = document.createElement('a');
+    const $gameImgWrap = document.createElement('div');
+    $gameImgWrap.setAttribute('class', 'cover-img-wrap');
+    const $gameImg = document.createElement('img');
+    $gameImg.setAttribute('class', 'cover-img');
+    $gameImg.setAttribute('src', played[i].background_image);
+    $gameImg.setAttribute('alt', played[i].title);
+
+    $playedRow.appendChild($gameWrap);
+    $gameWrap.appendChild($gameLink);
+    $gameLink.appendChild($gameImgWrap);
+    $gameImgWrap.appendChild($gameImg);
+  }
+
+  for (let i = 0; i < want.length; i++) {
+    const $gameWrap = document.createElement('div');
+    $gameWrap.setAttribute('class', 'col-1-8');
+    $gameWrap.setAttribute('data-item', 'game');
+    const $gameLink = document.createElement('a');
+    const $gameImgWrap = document.createElement('div');
+    $gameImgWrap.setAttribute('class', 'cover-img-wrap');
+    const $gameImg = document.createElement('img');
+    $gameImg.setAttribute('class', 'cover-img');
+    $gameImg.setAttribute('src', want[i].background_image);
+    $gameImg.setAttribute('alt', want[i].title);
+
+    $wantToPlayRow.appendChild($gameWrap);
+    $gameWrap.appendChild($gameLink);
+    $gameLink.appendChild($gameImgWrap);
+    $gameImgWrap.appendChild($gameImg);
   }
 }
 
