@@ -31,7 +31,7 @@
 
   <main>
     <!-- Loading View -->
-    <div class="container-md hidden" data-view="loading">
+    <div class="container-md" data-view="loading">
       <div class="row justify-center align-center">
         <img src="images/loading.svg" alt="loading">
       </div>
@@ -40,128 +40,14 @@
     <div class="container" data-view="dashboard">
       <div class="row space-between align-center">
         <h1>Want to Play</h1>
-        <button class="button text alternate" id="all-want-to-play">See All</button>
+        <button class="button text alternate hidden" id="all-want-to-play">See All</button>
       </div>
-      <div class="row margin-bottom-2 space-between" id="want-to-play">
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-      </div>
+      <div class="row margin-bottom-2" id="want-to-play"></div>
       <div class="row space-between align-center">
         <h1>Played</h1>
-        <button class="button text alternate" id="all-played">See All</button>
+        <button class="button text alternate hidden" id="all-played">See All</button>
       </div>
-      <div class="row space-between" id="played">
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-        <div class="col-1-8" data-item="game">
-          <a>
-            <div class="cover-img-wrap">
-              <img class="cover-img" src="images/drg.png" alt="">
-            </div>
-          </a>
-        </div>
-      </div>
+      <div class="row" id="played"></div>
     </div>
     <!-- Search View -->
     <div class="container-md hidden" data-view="search-results">
