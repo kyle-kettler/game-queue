@@ -1,3 +1,4 @@
+const $dashboardView = document.querySelector('[data-view="dashboard"]');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
@@ -14,9 +15,10 @@ const $wantButton = document.querySelector('#want-button');
 const $thumbsUpButton = document.querySelector('#thumbs-up');
 const $thumbsDownButton = document.querySelector('#thumbs-down');
 
-let currentSearchGame;
+let currentGame;
 
 // Dashboard code //
+// Functions
 function buildDashboardList(data) {
   $playedRow.replaceChildren();
   $wantToPlayRow.replaceChildren();
@@ -25,9 +27,9 @@ function buildDashboardList(data) {
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].played === true) {
-      played.unshift(data[i]);
+      played.push(data[i]);
     } else if (data[i].want === true) {
-      want.unshift(data[i]);
+      want.push(data[i]);
     }
   }
 
@@ -38,13 +40,14 @@ function buildDashboardList(data) {
     const $gameWrap = document.createElement('div');
     $gameWrap.setAttribute('class', 'col-1-8');
     $gameWrap.setAttribute('data-item', 'game');
+    $gameWrap.setAttribute('id', played[i].id);
     const $gameLink = document.createElement('a');
     const $gameImgWrap = document.createElement('div');
     $gameImgWrap.setAttribute('class', 'cover-img-wrap');
     const $gameImg = document.createElement('img');
     $gameImg.setAttribute('class', 'cover-img');
     $gameImg.setAttribute('src', played[i].background_image);
-    $gameImg.setAttribute('alt', played[i].title);
+    $gameImg.setAttribute('alt', played[i].name);
 
     $playedRow.appendChild($gameWrap);
     $gameWrap.appendChild($gameLink);
@@ -56,13 +59,14 @@ function buildDashboardList(data) {
     const $gameWrap = document.createElement('div');
     $gameWrap.setAttribute('class', 'col-1-8');
     $gameWrap.setAttribute('data-item', 'game');
+    $gameWrap.setAttribute('id', want[i].id);
     const $gameLink = document.createElement('a');
     const $gameImgWrap = document.createElement('div');
     $gameImgWrap.setAttribute('class', 'cover-img-wrap');
     const $gameImg = document.createElement('img');
     $gameImg.setAttribute('class', 'cover-img');
     $gameImg.setAttribute('src', want[i].background_image);
-    $gameImg.setAttribute('alt', want[i].title);
+    $gameImg.setAttribute('alt', want[i].name);
 
     $wantToPlayRow.appendChild($gameWrap);
     $gameWrap.appendChild($gameLink);
@@ -71,10 +75,27 @@ function buildDashboardList(data) {
   }
 }
 
+// Events
 document.addEventListener('DOMContentLoaded', event => {
   buildDashboardList(data);
   $loadingView.classList.add('hidden');
 });
+
+$dashboardView.addEventListener('click', event => {
+  let gameID;
+  if (event.target.closest('[data-item="game"]')) {
+    gameID = event.target.closest('[data-item="game"]').id;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === Number(gameID)) {
+        $dashboardView.classList.add('hidden');
+        $gameInfoView.classList.remove('hidden');
+        updateGameInfo(data[i]);
+      }
+    }
+  }
+});
+// End Dashboard Code//
+
 // Search Code //
 // Functions
 function searchGames() {
@@ -157,8 +178,8 @@ function findCurrentGame(id) {
   xhr.open('GET', 'https://rawg.io/api/games/' + id + '?key=70f3566e2dca40338ef7b433dfc63e7b');
   xhr.responseType = 'json';
   xhr.addEventListener('load', () => {
-    currentSearchGame = xhr.response;
-    updateGameInfo(currentSearchGame);
+    currentGame = xhr.response;
+    updateGameInfo(currentGame);
     $loadingView.classList.add('hidden');
     $gameInfoView.classList.remove('hidden');
   });
@@ -166,6 +187,7 @@ function findCurrentGame(id) {
 }
 
 function updateGameInfo(game) {
+  currentGame = game;
   const $gameMainImg = document.querySelector('.info-main-img');
   const $glowImg = document.querySelector('.glow-img');
   const $gameTitle = document.querySelector('#game-title');
@@ -187,7 +209,7 @@ function updateButtonState() {
 
   if (data.length !== 0) {
     for (let i = 0; i < data.length; i++) {
-      if (data[i].id === currentSearchGame.id) {
+      if (data[i].id === currentGame.id) {
         if (data[i].played === true) {
           $playedButton.classList.add('active');
           $wantButton.classList.remove('active');
@@ -211,10 +233,10 @@ function updateButtonState() {
 
 function createGameData() {
   const game = {};
-  game.id = currentSearchGame.id;
-  game.name = currentSearchGame.name;
-  game.description = currentSearchGame.description;
-  game.background_image = currentSearchGame.background_image;
+  game.id = currentGame.id;
+  game.name = currentGame.name;
+  game.description = currentGame.description;
+  game.background_image = currentGame.background_image;
   game.want = false;
   game.played = false;
   game.favorite = false;
@@ -228,7 +250,7 @@ function updateGameStatus(event) {
     let gameInData = false;
     if (event.target === $playedButton) {
       for (let i = 0; i < data.length; i++) {
-        if (data[i].id === currentSearchGame.id) {
+        if (data[i].id === currentGame.id) {
           gameInData = true;
           data[i].played = true;
           data[i].want = false;
@@ -241,7 +263,7 @@ function updateGameStatus(event) {
     }
     if (event.target === $wantButton) {
       for (let i = 0; i < data.length; i++) {
-        if (data[i].id === currentSearchGame.id) {
+        if (data[i].id === currentGame.id) {
           gameInData = true;
           data[i].played = false;
           data[i].want = true;
@@ -267,7 +289,7 @@ function updateGameStatus(event) {
 function updateGameRating(event) {
   if (event.target === $thumbsUpButton) {
     for (let i = 0; i < data.length; i++) {
-      if (data[i].id === currentSearchGame.id) {
+      if (data[i].id === currentGame.id) {
         data[i].thumbsUp = true;
         data[i].thumbsDown = false;
       }
@@ -275,7 +297,7 @@ function updateGameRating(event) {
   }
   if (event.target === $thumbsDownButton) {
     for (let i = 0; i < data.length; i++) {
-      if (data[i].id === currentSearchGame.id) {
+      if (data[i].id === currentGame.id) {
         data[i].thumbsUp = false;
         data[i].thumbsDown = true;
       }
