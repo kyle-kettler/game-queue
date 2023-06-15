@@ -4,6 +4,7 @@
   --light-purple-50: rgba(192, 202, 245, 0.5);
   --teal: rgb(89, 253, 198);
   --teal-30: rgba(89, 253, 198, 0.3);
+  --teal-50: rgba(89, 253, 198, 0.5);
   --dark-blue: rgb(54, 59, 84);
   --dark-blue-50: rgba(54, 59, 84, 0.5);
   --light-blue: rgb(134, 216, 250);
@@ -85,6 +86,16 @@ a {
   transition: color 300ms;
 }
 
+.button.text.alternate {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  color: var(--teal-50);
+}
+
+.button.text.alternate:hover {
+  color: var(--teal);
+}
+
 .button.text:hover {
   color: var(--teal);
   background-color: transparent;
@@ -160,9 +171,12 @@ a {
 
 /* Images */
 .cover-img-wrap {
-  margin-bottom: 1rem;
   position: relative;
-  padding-top: 130%;
+  padding-top: 150%;
+}
+
+.cover-img-wrap.search {
+  margin-bottom: 1rem;
 }
 
 .cover-img {
@@ -233,6 +247,10 @@ a {
 
 .margin-top-2 {
   margin-top: 2rem;
+}
+
+.margin-bottom-2 {
+  margin-bottom: 2rem;
 }
 
 i {

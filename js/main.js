@@ -43,7 +43,7 @@ function buildSearchResults(results) {
   }
 
   const $resultRow = document.createElement('div');
-  $resultRow.setAttribute('class', 'row');
+  $resultRow.setAttribute('class', 'row search');
   $resultRow.setAttribute('id', 'search-results');
 
   for (let i = 0; i < results.length; i++) {
