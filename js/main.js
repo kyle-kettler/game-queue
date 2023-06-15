@@ -1,10 +1,15 @@
-const $searchForm = document.querySelector('#search');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
+const $ratingView = document.querySelector('[data-view="rate"]');
+
+const $searchForm = document.querySelector('#search');
+
 const $gameButtonGroup = document.querySelector('#game-button-group');
 const $playedButton = document.querySelector('#played-button');
 const $wantButton = document.querySelector('#want-button');
+const $thumbsUpButton = document.querySelector('#thumbs-up');
+const $thumbsDownButton = document.querySelector('#thumbs-down');
 
 let currentGame;
 
@@ -112,6 +117,9 @@ function updateGameInfo(game) {
 function updateButtonState() {
   $wantButton.classList.remove('active');
   $playedButton.classList.remove('active');
+  $thumbsUpButton.classList.remove('active');
+  $thumbsDownButton.classList.remove('active');
+  $ratingView.classList.add('hidden');
 
   if (data.length !== 0) {
     for (let i = 0; i < data.length; i++) {
@@ -119,9 +127,18 @@ function updateButtonState() {
         if (data[i].played === true) {
           $playedButton.classList.add('active');
           $wantButton.classList.remove('active');
+          $ratingView.classList.remove('hidden');
         } else if (data[i].want === true) {
           $wantButton.classList.add('active');
           $playedButton.classList.remove('active');
+          $ratingView.classList.add('hidden');
+        }
+        if (data[i].thumbsUp === true) {
+          $thumbsUpButton.classList.add('active');
+          $thumbsDownButton.classList.remove('active');
+        } else if (data[i].thumbsDown === true) {
+          $thumbsUpButton.classList.remove('active');
+          $thumbsDownButton.classList.add('active');
         }
       }
     }
@@ -137,8 +154,8 @@ function createGameData() {
   game.want = false;
   game.played = false;
   game.favorite = false;
-  game.good = false;
-  game.bad = false;
+  game.thumbsUp = false;
+  game.thumbsDown = false;
   data.unshift(game);
 }
 
@@ -183,9 +200,29 @@ function updateGameStatus(event) {
   }
 }
 
+function updateGameRating(event) {
+  if (event.target === $thumbsUpButton) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === currentGame.id) {
+        data[i].thumbsUp = true;
+        data[i].thumbsDown = false;
+      }
+    }
+  }
+  if (event.target === $thumbsDownButton) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === currentGame.id) {
+        data[i].thumbsUp = false;
+        data[i].thumbsDown = true;
+      }
+    }
+  }
+}
+
 // Events
 $gameButtonGroup.addEventListener('click', event => {
   updateGameStatus(event);
+  updateGameRating(event);
   updateButtonState();
 });
 // End Game Info Code //
