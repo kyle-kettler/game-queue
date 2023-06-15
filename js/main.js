@@ -8,7 +8,6 @@ const $seeAllView = document.querySelector('[data-view="see-all"]');
 const $navbar = document.querySelector('nav');
 const $logo = document.querySelector('#logo');
 const $navDashboardButton = document.querySelector('#nav-dashboard');
-// const $navFavoriteButton = document.querySelector('#nav-favorite');
 
 const $wantToPlayRow = document.querySelector('#want-to-play');
 const $playedRow = document.querySelector('#played');
