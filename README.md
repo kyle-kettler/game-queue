@@ -1,3 +1,3 @@
-# ajax-project
+# Game Queue
 
-A dynamic HTML, CSS, and JavaScript solo project.
+A web app created for people who want to organize video game queues.
