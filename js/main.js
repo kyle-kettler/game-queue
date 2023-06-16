@@ -19,8 +19,7 @@ const $seeAllPlayedButton = document.querySelector('#all-played');
 const $seeAllRow = document.querySelector('#see-all');
 const $seeAllHeadline = document.querySelector('#see-all-headline');
 
-const $favoritesRow = document.querySelector('#favorites')
-;
+const $favoritesRow = document.querySelector('#favorites');
 const $searchForm = document.querySelector('#search');
 
 const $gameInfoGroup = document.querySelector('#game-info-group');
