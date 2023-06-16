@@ -1,7 +1,21 @@
+const $dashboardView = document.querySelector('[data-view="dashboard"]');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
 const $ratingView = document.querySelector('[data-view="rate"]');
+const $seeAllView = document.querySelector('[data-view="see-all"]');
+
+const $navbar = document.querySelector('nav');
+const $logo = document.querySelector('#logo');
+const $navDashboardButton = document.querySelector('#nav-dashboard');
+
+const $wantToPlayRow = document.querySelector('#want-to-play');
+const $playedRow = document.querySelector('#played');
+const $seeAllWantButton = document.querySelector('#all-want-to-play');
+const $seeAllPlayedButton = document.querySelector('#all-played');
+
+const $seeAllRow = document.querySelector('#see-all');
+const $seeAllHeadline = document.querySelector('#see-all-headline');
 
 const $searchForm = document.querySelector('#search');
 
@@ -13,7 +27,157 @@ const $thumbsDownButton = document.querySelector('#thumbs-down');
 
 let currentGame;
 
+// Navigation Code //
+// Functions
+function navManager(event) {
+  if (event.target === $logo || event.target === $navDashboardButton) {
+    buildDashboard(data);
+    $dashboardView.classList.remove('hidden');
+    $gameInfoView.classList.add('hidden');
+    $searchView.classList.add('hidden');
+    $seeAllView.classList.add('hidden');
+  }
+}
+
+// Events
+$navbar.addEventListener('click', navManager);
+// End Navbar Code //
+
+// Dashboard code //
+// Functions
+function buildDashboard(data) {
+  $playedRow.replaceChildren();
+  $wantToPlayRow.replaceChildren();
+  const played = [];
+  const want = [];
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].played === true) {
+      played.push(data[i]);
+    } else if (data[i].want === true) {
+      want.push(data[i]);
+    }
+  }
+
+  if (played.length > 16) {
+    played.splice(16);
+    $seeAllPlayedButton.classList.remove('hidden');
+  }
+  if (want.length > 16) {
+    want.splice(16);
+    $seeAllWantButton.classList.remove('hidden');
+  }
+
+  $playedRow.appendChild(renderDashboardGames(played));
+
+  $wantToPlayRow.appendChild(renderDashboardGames(want));
+}
+
+function renderDashboardGames(array) {
+  const $gameRow = document.createElement('div');
+  $gameRow.setAttribute('class', 'row');
+  for (let i = 0; i < array.length; i++) {
+    const $gameWrap = document.createElement('div');
+    $gameWrap.setAttribute('class', 'col-1-8');
+    $gameWrap.setAttribute('data-item', 'game');
+    $gameWrap.setAttribute('id', array[i].id);
+    const $gameLink = document.createElement('a');
+    const $gameImgWrap = document.createElement('div');
+    $gameImgWrap.setAttribute('class', 'cover-img-wrap');
+    const $gameImg = document.createElement('img');
+    $gameImg.setAttribute('class', 'cover-img');
+    $gameImg.setAttribute('src', array[i].background_image);
+    $gameImg.setAttribute('alt', array[i].name);
+
+    $gameRow.appendChild($gameWrap);
+    $gameWrap.appendChild($gameLink);
+    $gameLink.appendChild($gameImgWrap);
+    $gameImgWrap.appendChild($gameImg);
+  }
+  return $gameRow;
+}
+
+// Events
+document.addEventListener('DOMContentLoaded', event => {
+  buildDashboard(data);
+  $loadingView.classList.add('hidden');
+});
+
+$dashboardView.addEventListener('click', event => {
+  let gameID;
+  if (event.target.closest('[data-item="game"]')) {
+    gameID = event.target.closest('[data-item="game"]').id;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === Number(gameID)) {
+        window.scrollTo(0, 0);
+        $dashboardView.classList.add('hidden');
+        $gameInfoView.classList.remove('hidden');
+        updateGameInfo(data[i]);
+      }
+    }
+  }
+
+  if (event.target === $seeAllPlayedButton) {
+    seeAllPLayed(data);
+    $dashboardView.classList.add('hidden');
+    $seeAllView.classList.remove('hidden');
+  }
+
+  if (event.target === $seeAllWantButton) {
+    seeAllWant(data);
+    $dashboardView.classList.add('hidden');
+    $seeAllView.classList.remove('hidden');
+  }
+});
+// End Dashboard Code//
+
+// See All Code //
+// Functions
+function seeAllPLayed(data) {
+  $seeAllRow.replaceChildren();
+  const played = [];
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].played === true) {
+      played.push(data[i]);
+    }
+  }
+  $seeAllRow.appendChild(renderDashboardGames(played));
+  $seeAllHeadline.textContent = 'Played';
+}
+
+function seeAllWant(data) {
+  $seeAllRow.replaceChildren();
+  const want = [];
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].want === true) {
+      want.push(data[i]);
+    }
+  }
+  $seeAllRow.appendChild(renderDashboardGames(want));
+  $seeAllHeadline.textContent = 'Want to Play';
+}
+
+// Events
+$seeAllView.addEventListener('click', event => {
+  let gameID;
+  if (event.target.closest('[data-item="game"]')) {
+    gameID = event.target.closest('[data-item="game"]').id;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === Number(gameID)) {
+        window.scrollTo(0, 0);
+        $seeAllView.classList.add('hidden');
+        $gameInfoView.classList.remove('hidden');
+        updateGameInfo(data[i]);
+      }
+    }
+  }
+});
+// End See All Code//
+
 // Search Code //
+// Functions
 function searchGames() {
   const $searchQuery = $searchForm[0].value;
   const xhr = new XMLHttpRequest();
@@ -28,14 +192,6 @@ function searchGames() {
   xhr.send();
 }
 
-$searchForm.addEventListener('submit', event => {
-  $loadingView.classList.remove('hidden');
-  $gameInfoView.classList.add('hidden');
-  event.preventDefault();
-  searchGames();
-  $searchForm.reset();
-});
-
 function buildSearchResults(results) {
   const $searchResults = document.querySelector('#search-results');
   if ($searchResults) {
@@ -43,7 +199,7 @@ function buildSearchResults(results) {
   }
 
   const $resultRow = document.createElement('div');
-  $resultRow.setAttribute('class', 'row');
+  $resultRow.setAttribute('class', 'row search');
   $resultRow.setAttribute('id', 'search-results');
 
   for (let i = 0; i < results.length; i++) {
@@ -75,6 +231,7 @@ function buildSearchResults(results) {
   return $resultRow;
 }
 
+// Events
 $searchView.addEventListener('click', event => {
   let gameID;
   if (event.target.closest('[data-item="game"]')) {
@@ -83,6 +240,16 @@ $searchView.addEventListener('click', event => {
   findCurrentGame(gameID);
   $loadingView.classList.remove('hidden');
   $searchView.classList.add('hidden');
+  window.scrollTo(0, 0);
+});
+
+$searchForm.addEventListener('submit', event => {
+  $loadingView.classList.remove('hidden');
+  $gameInfoView.classList.add('hidden');
+  $dashboardView.classList.add('hidden');
+  event.preventDefault();
+  searchGames();
+  $searchForm.reset();
 });
 // End Search Code //
 
@@ -102,6 +269,7 @@ function findCurrentGame(id) {
 }
 
 function updateGameInfo(game) {
+  currentGame = game;
   const $gameMainImg = document.querySelector('.info-main-img');
   const $glowImg = document.querySelector('.glow-img');
   const $gameTitle = document.querySelector('#game-title');
