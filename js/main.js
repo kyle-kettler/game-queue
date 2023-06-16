@@ -24,6 +24,7 @@ const $playedButton = document.querySelector('#played-button');
 const $wantButton = document.querySelector('#want-button');
 const $thumbsUpButton = document.querySelector('#thumbs-up');
 const $thumbsDownButton = document.querySelector('#thumbs-down');
+const $favoriteButton = document.querySelector('.star');
 
 let currentGame;
 
@@ -296,10 +297,12 @@ function updateButtonState() {
           $playedButton.classList.add('active');
           $wantButton.classList.remove('active');
           $ratingView.classList.remove('hidden');
+          $favoriteButton.classList.remove('hidden');
         } else if (data[i].want === true) {
           $wantButton.classList.add('active');
           $playedButton.classList.remove('active');
           $ratingView.classList.add('hidden');
+          $favoriteButton.classList.add('hidden');
         }
         if (data[i].thumbsUp === true) {
           $thumbsUpButton.classList.add('active');
