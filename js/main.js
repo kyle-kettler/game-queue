@@ -68,43 +68,33 @@ function buildDashboard(data) {
     $seeAllWantButton.classList.remove('hidden');
   }
 
-  for (let i = 0; i < played.length; i++) {
+  $playedRow.appendChild(renderDashboardGames(played));
+
+  $wantToPlayRow.appendChild(renderDashboardGames(want));
+}
+
+function renderDashboardGames(array) {
+  const $gameRow = document.createElement('div');
+  $gameRow.setAttribute('class', 'row');
+  for (let i = 0; i < array.length; i++) {
     const $gameWrap = document.createElement('div');
     $gameWrap.setAttribute('class', 'col-1-8');
     $gameWrap.setAttribute('data-item', 'game');
-    $gameWrap.setAttribute('id', played[i].id);
+    $gameWrap.setAttribute('id', array[i].id);
     const $gameLink = document.createElement('a');
     const $gameImgWrap = document.createElement('div');
     $gameImgWrap.setAttribute('class', 'cover-img-wrap');
     const $gameImg = document.createElement('img');
     $gameImg.setAttribute('class', 'cover-img');
-    $gameImg.setAttribute('src', played[i].background_image);
-    $gameImg.setAttribute('alt', played[i].name);
+    $gameImg.setAttribute('src', array[i].background_image);
+    $gameImg.setAttribute('alt', array[i].name);
 
-    $playedRow.appendChild($gameWrap);
+    $gameRow.appendChild($gameWrap);
     $gameWrap.appendChild($gameLink);
     $gameLink.appendChild($gameImgWrap);
     $gameImgWrap.appendChild($gameImg);
   }
-
-  for (let i = 0; i < want.length; i++) {
-    const $gameWrap = document.createElement('div');
-    $gameWrap.setAttribute('class', 'col-1-8');
-    $gameWrap.setAttribute('data-item', 'game');
-    $gameWrap.setAttribute('id', want[i].id);
-    const $gameLink = document.createElement('a');
-    const $gameImgWrap = document.createElement('div');
-    $gameImgWrap.setAttribute('class', 'cover-img-wrap');
-    const $gameImg = document.createElement('img');
-    $gameImg.setAttribute('class', 'cover-img');
-    $gameImg.setAttribute('src', want[i].background_image);
-    $gameImg.setAttribute('alt', want[i].name);
-
-    $wantToPlayRow.appendChild($gameWrap);
-    $gameWrap.appendChild($gameLink);
-    $gameLink.appendChild($gameImgWrap);
-    $gameImgWrap.appendChild($gameImg);
-  }
+  return $gameRow;
 }
 
 // Events
@@ -152,24 +142,7 @@ function seeAllPLayed(data) {
       played.push(data[i]);
     }
   }
-  for (let i = 0; i < played.length; i++) {
-    const $gameWrap = document.createElement('div');
-    $gameWrap.setAttribute('class', 'col-1-8');
-    $gameWrap.setAttribute('data-item', 'game');
-    $gameWrap.setAttribute('id', played[i].id);
-    const $gameLink = document.createElement('a');
-    const $gameImgWrap = document.createElement('div');
-    $gameImgWrap.setAttribute('class', 'cover-img-wrap');
-    const $gameImg = document.createElement('img');
-    $gameImg.setAttribute('class', 'cover-img');
-    $gameImg.setAttribute('src', played[i].background_image);
-    $gameImg.setAttribute('alt', played[i].name);
-
-    $seeAllRow.appendChild($gameWrap);
-    $gameWrap.appendChild($gameLink);
-    $gameLink.appendChild($gameImgWrap);
-    $gameImgWrap.appendChild($gameImg);
-  }
+  $seeAllRow.appendChild(renderDashboardGames(played));
   $seeAllHeadline.textContent = 'Played';
 }
 
@@ -182,24 +155,7 @@ function seeAllWant(data) {
       want.push(data[i]);
     }
   }
-  for (let i = 0; i < want.length; i++) {
-    const $gameWrap = document.createElement('div');
-    $gameWrap.setAttribute('class', 'col-1-8');
-    $gameWrap.setAttribute('data-item', 'game');
-    $gameWrap.setAttribute('id', want[i].id);
-    const $gameLink = document.createElement('a');
-    const $gameImgWrap = document.createElement('div');
-    $gameImgWrap.setAttribute('class', 'cover-img-wrap');
-    const $gameImg = document.createElement('img');
-    $gameImg.setAttribute('class', 'cover-img');
-    $gameImg.setAttribute('src', want[i].background_image);
-    $gameImg.setAttribute('alt', want[i].name);
-
-    $seeAllRow.appendChild($gameWrap);
-    $gameWrap.appendChild($gameLink);
-    $gameLink.appendChild($gameImgWrap);
-    $gameImgWrap.appendChild($gameImg);
-  }
+  $seeAllRow.appendChild(renderDashboardGames(want));
   $seeAllHeadline.textContent = 'Want to Play';
 }
 
