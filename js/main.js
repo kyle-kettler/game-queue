@@ -19,7 +19,7 @@ const $seeAllHeadline = document.querySelector('#see-all-headline');
 
 const $searchForm = document.querySelector('#search');
 
-const $gameButtonGroup = document.querySelector('#game-button-group');
+const $gameInfoGroup = document.querySelector('#game-info-group');
 const $playedButton = document.querySelector('#played-button');
 const $wantButton = document.querySelector('#want-button');
 const $thumbsUpButton = document.querySelector('#thumbs-up');
@@ -288,6 +288,7 @@ function updateButtonState() {
   $playedButton.classList.remove('active');
   $thumbsUpButton.classList.remove('active');
   $thumbsDownButton.classList.remove('active');
+  $favoriteButton.classList.add('hidden');
   $ratingView.classList.add('hidden');
 
   if (data.length !== 0) {
@@ -310,6 +311,11 @@ function updateButtonState() {
         } else if (data[i].thumbsDown === true) {
           $thumbsUpButton.classList.remove('active');
           $thumbsDownButton.classList.add('active');
+        }
+        if (data[i].favorite === true) {
+          $favoriteButton.classList.add('active');
+        } else if (data[i].favorite === false) {
+          $favoriteButton.classList.remove('active');
         }
       }
     }
@@ -388,10 +394,19 @@ function updateGameRating(event) {
       }
     }
   }
+  if (event.target === $favoriteButton) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === currentGame.id) {
+        if (data[i].favorite === false) {
+          data[i].favorite = true;
+        } else { data[i].favorite = false; }
+      }
+    }
+  }
 }
 
 // Events
-$gameButtonGroup.addEventListener('click', event => {
+$gameInfoGroup.addEventListener('click', event => {
   updateGameStatus(event);
   updateGameRating(event);
   updateButtonState();
