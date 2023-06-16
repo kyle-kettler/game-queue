@@ -4,10 +4,12 @@ const $loadingView = document.querySelector('[data-view="loading"]');
 const $gameInfoView = document.querySelector('[data-view="game-info"]');
 const $ratingView = document.querySelector('[data-view="rate"]');
 const $seeAllView = document.querySelector('[data-view="see-all"]');
+const $favoriteView = document.querySelector('[data-view="favorites"]');
 
 const $navbar = document.querySelector('nav');
 const $logo = document.querySelector('#logo');
 const $navDashboardButton = document.querySelector('#nav-dashboard');
+const $navFavoriteButton = document.querySelector('#nav-favorites');
 
 const $wantToPlayRow = document.querySelector('#want-to-play');
 const $playedRow = document.querySelector('#played');
@@ -17,6 +19,8 @@ const $seeAllPlayedButton = document.querySelector('#all-played');
 const $seeAllRow = document.querySelector('#see-all');
 const $seeAllHeadline = document.querySelector('#see-all-headline');
 
+const $favoritesRow = document.querySelector('#favorites')
+;
 const $searchForm = document.querySelector('#search');
 
 const $gameInfoGroup = document.querySelector('#game-info-group');
@@ -37,6 +41,15 @@ function navManager(event) {
     $gameInfoView.classList.add('hidden');
     $searchView.classList.add('hidden');
     $seeAllView.classList.add('hidden');
+    $favoriteView.classList.add('hidden');
+  }
+  if (event.target === $navFavoriteButton) {
+    $favoriteView.classList.remove('hidden');
+    $dashboardView.classList.add('hidden');
+    $gameInfoView.classList.add('hidden');
+    $searchView.classList.add('hidden');
+    $seeAllView.classList.add('hidden');
+    renderFavorites(data);
   }
 }
 
@@ -69,17 +82,17 @@ function buildDashboard(data) {
     $seeAllWantButton.classList.remove('hidden');
   }
 
-  $playedRow.appendChild(renderDashboardGames(played));
+  $playedRow.appendChild(renderGames(played, 'col-1-8'));
 
-  $wantToPlayRow.appendChild(renderDashboardGames(want));
+  $wantToPlayRow.appendChild(renderGames(want, 'col-1-8'));
 }
 
-function renderDashboardGames(array) {
+function renderGames(array, columnWidthClass) {
   const $gameRow = document.createElement('div');
   $gameRow.setAttribute('class', 'row');
   for (let i = 0; i < array.length; i++) {
     const $gameWrap = document.createElement('div');
-    $gameWrap.setAttribute('class', 'col-1-8');
+    $gameWrap.setAttribute('class', columnWidthClass);
     $gameWrap.setAttribute('data-item', 'game');
     $gameWrap.setAttribute('id', array[i].id);
     const $gameLink = document.createElement('a');
@@ -132,6 +145,37 @@ $dashboardView.addEventListener('click', event => {
 });
 // End Dashboard Code//
 
+// Favorites Code //
+// Functions
+function renderFavorites(data) {
+  $favoritesRow.replaceChildren();
+  const favorites = [];
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].favorite === true) {
+      favorites.push(data[i]);
+    }
+  }
+  $favoritesRow.appendChild(renderGames(favorites, 'col-1-4'));
+}
+
+// Events
+$favoriteView.addEventListener('click', event => {
+  let gameID;
+  if (event.target.closest('[data-item="game"]')) {
+    gameID = event.target.closest('[data-item="game"]').id;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id === Number(gameID)) {
+        window.scrollTo(0, 0);
+        $favoriteView.classList.add('hidden');
+        $gameInfoView.classList.remove('hidden');
+        updateGameInfo(data[i]);
+      }
+    }
+  }
+});
+// End Favorites Code //
+
 // See All Code //
 // Functions
 function seeAllPLayed(data) {
@@ -143,7 +187,7 @@ function seeAllPLayed(data) {
       played.push(data[i]);
     }
   }
-  $seeAllRow.appendChild(renderDashboardGames(played));
+  $seeAllRow.appendChild(renderGames(played, 'col-1-8'));
   $seeAllHeadline.textContent = 'Played';
 }
 
@@ -156,7 +200,7 @@ function seeAllWant(data) {
       want.push(data[i]);
     }
   }
-  $seeAllRow.appendChild(renderDashboardGames(want));
+  $seeAllRow.appendChild(renderGames(want, 'col-1-8'));
   $seeAllHeadline.textContent = 'Want to Play';
 }
 
@@ -248,6 +292,7 @@ $searchForm.addEventListener('submit', event => {
   $loadingView.classList.remove('hidden');
   $gameInfoView.classList.add('hidden');
   $dashboardView.classList.add('hidden');
+  $favoriteView.classList.add('hidden');
   event.preventDefault();
   searchGames();
   $searchForm.reset();
