@@ -133,6 +133,24 @@ a {
   color: var(--black);
 }
 
+.star {
+  font-size: 1.25rem;
+  color: var(--black);
+  -webkit-text-stroke: 1px var(--light-purple);
+  transition: color 200ms ease;
+  margin-top: 0.25rem;
+}
+
+.star:hover {
+  color: var(--teal);
+  -webkit-text-stroke: 1px var(--teal);
+}
+
+.star.active {
+  color: var(--teal);
+  -webkit-text-stroke: 1px var(--teal);
+}
+
 /* navigation */
 .logo {
   font-size: 1.3rem;
