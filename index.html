@@ -30,6 +30,16 @@
   </header>
 
   <main>
+    <!-- Initial view -->
+    <div class="container hidden" data-view="initial">
+      <div class="row justify-center align-center height-70vh">
+        <div class="flex-group-vert justify-center align-center text-align-center">
+          <i class="lni lni-game"></i>
+          <h2>No games!</h2>
+          <p>Start by searching for a game and adding it to your list</p>
+        </div>
+      </div>
+    </div>
     <!-- Loading View -->
     <div class="container-md" data-view="loading">
       <div class="row justify-center align-center">
@@ -37,7 +47,7 @@
       </div>
     </div>
     <!-- Dashboard View -->
-    <div class="container" data-view="dashboard">
+    <div class="container hidden" data-view="dashboard">
       <div class="row space-between align-center">
         <h1>Want to Play</h1>
         <button class="button text alternate hidden" id="all-want-to-play">See All</button>

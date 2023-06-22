@@ -1,3 +1,4 @@
+const $initialView = document.querySelector('[data-view="initial"');
 const $dashboardView = document.querySelector('[data-view="dashboard"]');
 const $searchView = document.querySelector('[data-view="search-results"]');
 const $loadingView = document.querySelector('[data-view="loading"]');
@@ -36,14 +37,12 @@ let currentGame;
 function navManager(event) {
   if (event.target === $logo || event.target === $navDashboardButton) {
     buildDashboard(data);
-    $dashboardView.classList.remove('hidden');
     $gameInfoView.classList.add('hidden');
     $searchView.classList.add('hidden');
     $seeAllView.classList.add('hidden');
     $favoriteView.classList.add('hidden');
   }
   if (event.target === $navFavoriteButton) {
-    $favoriteView.classList.remove('hidden');
     $dashboardView.classList.add('hidden');
     $gameInfoView.classList.add('hidden');
     $searchView.classList.add('hidden');
@@ -59,31 +58,36 @@ $navbar.addEventListener('click', navManager);
 // Dashboard code //
 // Functions
 function buildDashboard(data) {
-  $playedRow.replaceChildren();
-  $wantToPlayRow.replaceChildren();
-  const played = [];
-  const want = [];
+  if (data.length === 0) {
+    $initialView.classList.remove('hidden');
+  } else {
+    $dashboardView.classList.remove('hidden');
+    $playedRow.replaceChildren();
+    $wantToPlayRow.replaceChildren();
+    const played = [];
+    const want = [];
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].played === true) {
-      played.push(data[i]);
-    } else if (data[i].want === true) {
-      want.push(data[i]);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].played === true) {
+        played.push(data[i]);
+      } else if (data[i].want === true) {
+        want.push(data[i]);
+      }
     }
-  }
 
-  if (played.length > 16) {
-    played.splice(16);
-    $seeAllPlayedButton.classList.remove('hidden');
-  }
-  if (want.length > 16) {
-    want.splice(16);
-    $seeAllWantButton.classList.remove('hidden');
-  }
+    if (played.length > 16) {
+      played.splice(16);
+      $seeAllPlayedButton.classList.remove('hidden');
+    }
+    if (want.length > 16) {
+      want.splice(16);
+      $seeAllWantButton.classList.remove('hidden');
+    }
 
-  $playedRow.appendChild(renderGames(played, 'col-1-8'));
+    $playedRow.appendChild(renderGames(played, 'col-1-8'));
 
-  $wantToPlayRow.appendChild(renderGames(want, 'col-1-8'));
+    $wantToPlayRow.appendChild(renderGames(want, 'col-1-8'));
+  }
 }
 
 function renderGames(array, columnWidthClass) {
@@ -112,7 +116,11 @@ function renderGames(array, columnWidthClass) {
 
 // Events
 document.addEventListener('DOMContentLoaded', event => {
-  buildDashboard(data);
+  if (data.length === 0) {
+    $initialView.classList.remove('hidden');
+  } else {
+    buildDashboard(data);
+  }
   $loadingView.classList.add('hidden');
 });
 
@@ -147,15 +155,20 @@ $dashboardView.addEventListener('click', event => {
 // Favorites Code //
 // Functions
 function renderFavorites(data) {
-  $favoritesRow.replaceChildren();
-  const favorites = [];
+  if (data.length === 0) {
+    $initialView.classList.remove('hidden');
+  } else {
+    $favoriteView.classList.remove('hidden');
+    $favoritesRow.replaceChildren();
+    const favorites = [];
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].favorite === true) {
-      favorites.push(data[i]);
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].favorite === true) {
+        favorites.push(data[i]);
+      }
     }
+    $favoritesRow.appendChild(renderGames(favorites, 'col-1-4'));
   }
-  $favoritesRow.appendChild(renderGames(favorites, 'col-1-4'));
 }
 
 // Events
@@ -289,6 +302,7 @@ $searchView.addEventListener('click', event => {
 
 $searchForm.addEventListener('submit', event => {
   $loadingView.classList.remove('hidden');
+  $initialView.classList.add('hidden');
   $gameInfoView.classList.add('hidden');
   $dashboardView.classList.add('hidden');
   $favoriteView.classList.add('hidden');
